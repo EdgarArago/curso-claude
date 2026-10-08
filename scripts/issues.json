@@ -1,0 +1,56 @@
+[
+  {
+    "title": "Proteger páginas de empleados",
+    "type": "bug",
+    "projects": ["web-empleados"],
+    "body": "No se está controlando el acceso a http://localhost:4201/barra, http://localhost:4201/salon y http://localhost:4201/cocina.\n\n- Un camarero solo debería de poder entrar a barra y salón.\n- El cocinero solo debería de poder entrar a la cocina.\n- El gerente puede ver todo."
+  },
+  {
+    "title": "No cargan los datos",
+    "type": "bug",
+    "projects": ["web-admin"],
+    "body": "Si estamos en la pestaña de ingredientes del restaurante 1 y pulsamos en ingredientes del restaurante 2, no se cargan los ingredientes del restaurante 2 y se quedan los del restaurante 1 en la pantalla.\n\nLo mismo pasa con los platos."
+  },
+  {
+    "title": "Página en blanco al entrar en la url de platos",
+    "type": "bug",
+    "projects": ["web-admin"],
+    "body": "Cuando entramos directamente en esta ruta http://localhost:4200/restaurants/rest-2/dishes o cualquiera similar se queda la página en blanco."
+  },
+  {
+    "title": "Seed no borra datos previos",
+    "type": "bug",
+    "projects": ["api"],
+    "body": "Al ejecutar el script \"api/src/scripts/seed.py\" no resetea la BBDD entera, sino que si hemos añadido o modificado algunos valores, estos permanecen.\n\nDebe de eliminar primero todos los datos de las tablas, y luego rellenarlas como ya está haciendo."
+  },
+  {
+    "title": "Gestión de mesas",
+    "type": "feature",
+    "projects": ["web-admin", "web-empleados", "web-clientes", "api"],
+    "body": "Cuando entra un cliente en la app, al elegir el restaurante, primero tendrá que indicar el número de personas, se le deben mostrar las mesas disponibles en las que pueden sentarse según la cantidad de personas y una vez que la elige, y le da a continuar, entonces ya se pone como ocupada y va a la página de la carta para enviar su pedido a cocina y barra.\n\nEl administrador debe de poder gestionar las mesas del restaurante (CRUD). Deben de tener un id, numero, descripcion, capacidad y estado (libre, ocupada, reservada).\n\nLos empleados pueden ver los estados de las mesas y cambiarlos. Además, pueden ver el estado de los pedidos de las mesas ocupadas."
+  },
+  {
+    "title": "Generar documentación con OpenAPI",
+    "type": "feature",
+    "projects": ["api"],
+    "body": "Generar un documento de OpenAPI 3 en el que se muestre el funcionamiento de la API, para poder publicarlo."
+  },
+  {
+    "title": "Implementar sistema de puntos",
+    "type": "feature",
+    "projects": ["api"],
+    "body": "Implementar un sistema de puntos para los clientes. Por cada X€ gastados se llevan Y puntos."
+  },
+  {
+    "title": "Códigos de descuentos",
+    "type": "feature",
+    "projects": ["api", "web-clientes", "web-admin"],
+    "body": "CRUD para que un admin de un restaurante pueda generar códigos de descuentos que van a poder aplicar los clientes.\n\nLos clientes deberán poder añadir un código de descuento al pedir la cuenta.\n\nLos clientes que tengan puntos, podrán usarlos como descuentos al pedir la cuenta, el administrador es el que podrá crear la relación entre los puntos y el descuento (10 puntos = 1€ de descuento, 100 puntos = 10€ de descuento...)."
+  },
+  {
+    "title": "Packs de productos",
+    "type": "feature",
+    "projects": ["api", "web-clientes", "web-admin"],
+    "body": "Junto a entrantes, comidas, bebidas... ahora los administradores deben de poder crear un pack con un precio concreto y unos productos concretos a elegir. Por ejemplo, la idea es que se pueda crear un pack de entrante + principal + bebida por 20€. Luego el cliente, si selecciona uno de estos packs, tendrá que elegir qué entrante, qué principal y qué bebida pedir. El administrador también podría limitar los productos que se pueden elegir en estos packs, por ejemplo, bloquear la cerveza dentro de la selección de bebidas del pack."
+  }
+]

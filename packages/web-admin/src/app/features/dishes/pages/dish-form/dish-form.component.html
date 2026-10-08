@@ -1,0 +1,92 @@
+<div class="fade-in">
+  <div class="page-header">
+    <div class="header-back">
+      <a [routerLink]="listUrl" class="back-link">
+        <lucide-icon name="chevron-left" [size]="18"></lucide-icon>
+      </a>
+      <h1>{{ pageTitle }}</h1>
+    </div>
+  </div>
+
+  @if (error()) {
+    <div class="alert-error">{{ error() }}</div>
+  }
+
+  <form (ngSubmit)="onSubmit()" class="card form-card">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="name">Nombre del plato</label>
+        <input id="name" type="text" class="form-control" [(ngModel)]="form.name" name="name" required placeholder="Ensalada César" />
+      </div>
+
+      <div class="form-group">
+        <label for="price">Precio (€)</label>
+        <input id="price" type="number" class="form-control" [(ngModel)]="form.price" name="price" required min="0.01" step="0.01" />
+      </div>
+
+      <div class="form-group">
+        <label for="category">Categoría</label>
+        <select id="category" class="form-control" [(ngModel)]="form.category" name="category" required>
+          @for (c of categories; track c) {
+            <option [value]="c">{{ getCategoryLabel(c) }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="available">Disponible</label>
+        <select id="available" class="form-control" [(ngModel)]="form.available" name="available">
+          <option [ngValue]="true">Sí</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+
+      <div class="form-group form-full">
+        <label for="description">Descripción (opcional)</label>
+        <textarea id="description" class="form-control" [(ngModel)]="form.description" name="description" rows="3" placeholder="Una deliciosa ensalada con..."></textarea>
+      </div>
+    </div>
+
+    <div class="ingredients-section">
+      <h3>Ingredientes del plato</h3>
+
+      @if (form.ingredients.length > 0) {
+        <div class="ingredient-chips">
+          @for (ing of form.ingredients; track ing.ingredientId) {
+            <div class="ingredient-chip">
+              <span>{{ getIngredientName(ing.ingredientId) }} — {{ ing.quantity }}</span>
+              <button type="button" class="chip-remove" (click)="removeIngredient(ing.ingredientId)">
+                <lucide-icon name="trash-2" [size]="12"></lucide-icon>
+              </button>
+            </div>
+          }
+        </div>
+      }
+
+      <div class="add-ingredient-row">
+        <select class="form-control" [(ngModel)]="newIngredientId" name="newIngredientId">
+          <option value="">Seleccionar ingrediente</option>
+          @for (i of ingredientStore.ingredients(); track i.id) {
+            <option [value]="i.id">{{ i.name }} ({{ i.unit }})</option>
+          }
+        </select>
+        <input type="number" class="form-control qty-input" [(ngModel)]="newIngredientQty" name="newIngredientQty" min="0.1" step="0.1" placeholder="Cant." />
+        <button type="button" class="btn btn-secondary btn-sm" (click)="addIngredient()">
+          <lucide-icon name="plus" [size]="14"></lucide-icon>
+          Añadir
+        </button>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <a [routerLink]="listUrl" class="btn btn-secondary">Cancelar</a>
+      <button type="submit" class="btn btn-primary" [disabled]="loading()">
+        @if (loading()) {
+          Guardando...
+        } @else {
+          Guardar
+        }
+      </button>
+    </div>
+  </form>
+</div>

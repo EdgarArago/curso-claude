@@ -1,0 +1,48 @@
+<div class="fade-in">
+  <div class="page-header">
+    <div class="header-back">
+      <a [routerLink]="listUrl" class="back-link">
+        <lucide-icon name="chevron-left" [size]="18"></lucide-icon>
+      </a>
+      <h1>{{ pageTitle }}</h1>
+    </div>
+  </div>
+
+  @if (error()) {
+    <div class="alert-error">{{ error() }}</div>
+  }
+
+  <form (ngSubmit)="onSubmit()" class="card form-card">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="name">Nombre del ingrediente</label>
+        <input id="name" type="text" class="form-control" [(ngModel)]="form.name" name="name" required placeholder="Tomate" />
+      </div>
+
+      <div class="form-group">
+        <label for="unit">Unidad de medida</label>
+        <select id="unit" class="form-control" [(ngModel)]="form.unit" name="unit" required>
+          @for (u of units; track u) {
+            <option [value]="u">{{ u }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="currentStock">Stock actual</label>
+        <input id="currentStock" type="number" class="form-control" [(ngModel)]="form.currentStock" name="currentStock" required min="0" step="0.1" />
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <a [routerLink]="listUrl" class="btn btn-secondary">Cancelar</a>
+      <button type="submit" class="btn btn-primary" [disabled]="loading()">
+        @if (loading()) {
+          Guardando...
+        } @else {
+          Guardar
+        }
+      </button>
+    </div>
+  </form>
+</div>

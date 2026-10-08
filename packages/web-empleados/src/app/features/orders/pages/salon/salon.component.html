@@ -1,0 +1,51 @@
+<div class="page-header">
+  <h1>Salón</h1>
+</div>
+
+@if (orderStore.loading() && orderStore.orders().length === 0) {
+  <div class="spinner"></div>
+}
+
+@if (orderStore.error()) {
+  <div class="alert-error">{{ orderStore.error() }}</div>
+}
+
+@if (!orderStore.loading() || orderStore.orders().length > 0) {
+  @if (readyOrders.length === 0) {
+    <div class="empty-state">
+      <p>No hay productos listos para entregar</p>
+    </div>
+  } @else {
+    <div class="orders-grid">
+      @for (order of readyOrders; track order.id) {
+        <div class="order-card">
+          <div class="order-header">
+            <span class="order-id">Pedido #{{ order.id.substring(0, 8) }}</span>
+            @if (order.tableId) {
+              <span class="table-badge table-highlight">Mesa {{ order.tableId }}</span>
+            }
+          </div>
+          <div class="order-items">
+            @for (item of order.items; track item.id) {
+              <div class="order-item">
+                <div class="item-info">
+                  <span class="item-quantity">{{ item.quantity }}x</span>
+                  <span class="item-name">{{ item.dishName || 'Producto' }}</span>
+                  @if (item.notes) {
+                    <span class="item-notes">{{ item.notes }}</span>
+                  }
+                </div>
+                <div class="item-actions">
+                  <span [class]="getStatusClass(item.status)">{{ item.status }}</span>
+                  <button class="btn btn-sm btn-primary" (click)="deliver(order.id, item.id)">
+                    Entregar
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+}

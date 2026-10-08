@@ -1,0 +1,56 @@
+<div class="fade-in">
+  <div class="page-header">
+    <h1>Ingredientes</h1>
+    <a [routerLink]="['new']" class="btn btn-primary">
+      <lucide-icon name="plus" [size]="16"></lucide-icon>
+      Nuevo ingrediente
+    </a>
+  </div>
+
+  @if (store.loading()) {
+    <div class="spinner"></div>
+  } @else if (store.error()) {
+    <div class="alert-error">{{ store.error() }}</div>
+  } @else if (store.ingredients().length === 0) {
+    <div class="empty-state card">
+      <lucide-icon name="package" [size]="40"></lucide-icon>
+      <p>No hay ingredientes para este restaurante</p>
+    </div>
+  } @else {
+    <div class="card table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Stock actual</th>
+            <th>Unidad</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (i of store.ingredients(); track i.id) {
+            <tr>
+              <td class="ingredient-name">{{ i.name }}</td>
+              <td>
+                <span [class]="i.currentStock <= 0 ? 'stock-zero' : 'stock-ok'">
+                  {{ i.currentStock }}
+                </span>
+              </td>
+              <td><span class="badge badge-muted">{{ i.unit }}</span></td>
+              <td>
+                <div class="actions">
+                  <a [routerLink]="[i.id, 'edit']" class="btn btn-secondary btn-sm">
+                    <lucide-icon name="edit" [size]="14"></lucide-icon>
+                  </a>
+                  <button class="btn btn-danger btn-sm" (click)="onDelete(i.id)">
+                    <lucide-icon name="trash-2" [size]="14"></lucide-icon>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

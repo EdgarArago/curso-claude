@@ -1,0 +1,16 @@
+{
+  "name": "resttek",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev -w @resttek/api",
+    "dev:admin": "npm run start -w @resttek/web-admin",
+    "dev:empleados": "npm run start -w @resttek/web-empleados",
+    "dev:clientes": "npm run start -w @resttek/web-clientes",
+    "test": "npm run test -w @resttek/api",
+    "seed": "npm run seed -w @resttek/api"
+  }
+}

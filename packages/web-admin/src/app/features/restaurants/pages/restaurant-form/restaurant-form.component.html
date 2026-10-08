@@ -1,0 +1,64 @@
+<div class="fade-in">
+  <div class="page-header">
+    <div class="header-back">
+      <a routerLink="/restaurants" class="back-link">
+        <lucide-icon name="chevron-left" [size]="18"></lucide-icon>
+      </a>
+      <h1>{{ pageTitle }}</h1>
+    </div>
+  </div>
+
+  @if (error()) {
+    <div class="alert-error">{{ error() }}</div>
+  }
+
+  <form (ngSubmit)="onSubmit()" class="card form-card">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="name">Nombre del restaurante</label>
+        <input id="name" type="text" class="form-control" [(ngModel)]="form.name" name="name" required placeholder="La Trattoria" />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" type="email" class="form-control" [(ngModel)]="form.email" name="email" required placeholder="info@restaurante.com" />
+      </div>
+
+      <div class="form-group">
+        <label for="address">Dirección</label>
+        <input id="address" type="text" class="form-control" [(ngModel)]="form.address" name="address" required placeholder="Calle Mayor 10, Madrid" />
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Teléfono</label>
+        <input id="phone" type="text" class="form-control" [(ngModel)]="form.phone" name="phone" required placeholder="+34 612 345 678" />
+      </div>
+
+      <div class="form-group">
+        <label for="ownerFirstName">Nombre del propietario</label>
+        <input id="ownerFirstName" type="text" class="form-control" [(ngModel)]="form.ownerFirstName" name="ownerFirstName" required placeholder="Carlos" />
+      </div>
+
+      <div class="form-group">
+        <label for="ownerLastName">Apellido del propietario</label>
+        <input id="ownerLastName" type="text" class="form-control" [(ngModel)]="form.ownerLastName" name="ownerLastName" required placeholder="García" />
+      </div>
+
+      <div class="form-group form-full">
+        <label for="logoUrl">URL del logo (opcional)</label>
+        <input id="logoUrl" type="url" class="form-control" [(ngModel)]="form.logoUrl" name="logoUrl" placeholder="https://ejemplo.com/logo.png" />
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <a routerLink="/restaurants" class="btn btn-secondary">Cancelar</a>
+      <button type="submit" class="btn btn-primary" [disabled]="loading()">
+        @if (loading()) {
+          Guardando...
+        } @else {
+          Guardar
+        }
+      </button>
+    </div>
+  </form>
+</div>

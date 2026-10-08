@@ -1,0 +1,45 @@
+h1 {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  margin-top: 4px;
+  margin-bottom: 32px;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.dash-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 28px;
+  text-decoration: none;
+  transition: all var(--transition);
+  color: var(--green-light);
+}
+
+.dash-card:hover {
+  border-color: var(--green-light);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+.dash-card h3 {
+  margin-top: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dash-card p {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--text-muted);
+}

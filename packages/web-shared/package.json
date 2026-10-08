@@ -1,0 +1,17 @@
+{
+  "name": "@resttek/web-shared",
+  "version": "0.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "dependencies": {
+    "@angular/common": "^21.1.0",
+    "@angular/core": "^21.1.0",
+    "@angular/forms": "^21.1.0",
+    "@angular/router": "^21.1.0",
+    "lucide-angular": "^0.577.0",
+    "rxjs": "~7.8.0"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.2"
+  }
+}

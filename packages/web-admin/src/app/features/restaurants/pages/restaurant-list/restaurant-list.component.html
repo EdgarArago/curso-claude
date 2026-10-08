@@ -1,0 +1,61 @@
+<div class="fade-in">
+  <div class="page-header">
+    <h1>Restaurantes</h1>
+    <a routerLink="new" class="btn btn-primary">
+      <lucide-icon name="plus" [size]="16"></lucide-icon>
+      Nuevo restaurante
+    </a>
+  </div>
+
+  @if (store.loading()) {
+    <div class="spinner"></div>
+  } @else if (store.error()) {
+    <div class="alert-error">{{ store.error() }}</div>
+  } @else if (store.restaurants().length === 0) {
+    <div class="empty-state card">
+      <lucide-icon name="utensils" [size]="40"></lucide-icon>
+      <p>No hay restaurantes registrados</p>
+    </div>
+  } @else {
+    <div class="card table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Propietario</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (r of store.restaurants(); track r.id) {
+            <tr>
+              <td>
+                <div class="restaurant-name">
+                  @if (r.logoUrl) {
+                    <img [src]="r.logoUrl" alt="" class="restaurant-logo" />
+                  }
+                  <span>{{ r.name }}</span>
+                </div>
+              </td>
+              <td>{{ r.address }}</td>
+              <td>{{ r.email }}</td>
+              <td>{{ r.phone }}</td>
+              <td>{{ r.ownerFirstName }} {{ r.ownerLastName }}</td>
+              <td>
+                <div class="actions">
+                  <a [routerLink]="[r.id, 'edit']" class="btn btn-secondary btn-sm">
+                    <lucide-icon name="edit" [size]="14"></lucide-icon>
+                    Editar
+                  </a>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

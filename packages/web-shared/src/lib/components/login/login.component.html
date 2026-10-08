@@ -1,0 +1,51 @@
+<div class="login-page">
+  <div class="login-card card fade-in">
+    <div class="login-header">
+      <img src="/assets/images/logo.png" alt="RestTek" class="login-logo">
+      <h1>RestTek</h1>
+      <p>Accede a tu panel de gestión</p>
+    </div>
+
+    @if (error()) {
+      <div class="alert-error">{{ error() }}</div>
+    }
+
+    <form (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <label for="email">Correo electrónico</label>
+        <input
+          id="email"
+          type="email"
+          class="form-control"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="tu@email.com"
+          required
+          autocomplete="email"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input
+          id="password"
+          type="password"
+          class="form-control"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="••••••••"
+          required
+          autocomplete="current-password"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary login-btn" [disabled]="loading()">
+        @if (loading()) {
+          <span>Accediendo...</span>
+        } @else {
+          <span>Iniciar sesión</span>
+        }
+      </button>
+    </form>
+  </div>
+</div>

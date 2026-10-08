@@ -1,0 +1,53 @@
+<div class="page-header">
+  <h1>Barra</h1>
+</div>
+
+@if (orderStore.loading() && orderStore.orders().length === 0) {
+  <div class="spinner"></div>
+}
+
+@if (orderStore.error()) {
+  <div class="alert-error">{{ orderStore.error() }}</div>
+}
+
+@if (!orderStore.loading() || orderStore.orders().length > 0) {
+  @if (pendingOrders.length === 0) {
+    <div class="empty-state">
+      <p>No hay bebidas pendientes</p>
+    </div>
+  } @else {
+    <div class="orders-grid">
+      @for (order of pendingOrders; track order.id) {
+        <div class="order-card">
+          <div class="order-header">
+            <span class="order-id">Pedido #{{ order.id.substring(0, 8) }}</span>
+            @if (order.tableId) {
+              <span class="table-badge">Mesa {{ order.tableId }}</span>
+            }
+          </div>
+          <div class="order-items">
+            @for (item of order.items; track item.id) {
+              <div class="order-item">
+                <div class="item-info">
+                  <span class="item-quantity">{{ item.quantity }}x</span>
+                  <span class="item-name">{{ item.dishName || 'Bebida' }}</span>
+                  @if (item.notes) {
+                    <span class="item-notes">{{ item.notes }}</span>
+                  }
+                </div>
+                <div class="item-actions">
+                  <span [class]="getStatusClass(item.status)">{{ item.status }}</span>
+                  @if (item.status === 'pendiente') {
+                    <button class="btn btn-sm btn-primary" (click)="markReady(order.id, item.id)">
+                      Listo
+                    </button>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+}

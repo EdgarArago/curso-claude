@@ -1,0 +1,65 @@
+<div class="fade-in">
+  <div class="page-header">
+    <h1>Platos</h1>
+    <a [routerLink]="['new']" class="btn btn-primary">
+      <lucide-icon name="plus" [size]="16"></lucide-icon>
+      Nuevo plato
+    </a>
+  </div>
+
+  @if (store.loading()) {
+    <div class="spinner"></div>
+  } @else if (store.error()) {
+    <div class="alert-error">{{ store.error() }}</div>
+  } @else if (store.dishes().length === 0) {
+    <div class="empty-state card">
+      <lucide-icon name="utensils" [size]="40"></lucide-icon>
+      <p>No hay platos para este restaurante</p>
+    </div>
+  } @else {
+    <div class="card table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Precio</th>
+            <th>Disponible</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (d of store.dishes(); track d.id) {
+            <tr>
+              <td>
+                <div class="dish-info">
+                  <span class="dish-name">{{ d.name }}</span>
+                  @if (d.description) {
+                    <span class="dish-desc">{{ d.description }}</span>
+                  }
+                </div>
+              </td>
+              <td><span class="badge badge-muted">{{ getCategoryLabel(d.category) }}</span></td>
+              <td class="price">{{ formatPrice(d.price) }}</td>
+              <td>
+                <button class="toggle-btn" [class.active]="d.available" (click)="onToggleAvailable(d.id, d)">
+                  <span class="toggle-dot"></span>
+                </button>
+              </td>
+              <td>
+                <div class="actions">
+                  <a [routerLink]="[d.id, 'edit']" class="btn btn-secondary btn-sm">
+                    <lucide-icon name="edit" [size]="14"></lucide-icon>
+                  </a>
+                  <button class="btn btn-danger btn-sm" (click)="onDelete(d.id)">
+                    <lucide-icon name="trash-2" [size]="14"></lucide-icon>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

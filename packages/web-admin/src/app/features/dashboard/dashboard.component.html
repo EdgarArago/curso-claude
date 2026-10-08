@@ -1,0 +1,12 @@
+<div class="dashboard fade-in">
+  <h1>Bienvenido, {{ authStore.user()?.firstName }}</h1>
+  <p class="subtitle">Panel de gestión de RestTek</p>
+
+  <div class="cards-grid">
+    <a routerLink="/restaurants" class="dash-card">
+      <lucide-icon name="store" [size]="28"></lucide-icon>
+      <h3>Restaurantes</h3>
+      <p>Gestiona los datos de tus restaurantes</p>
+    </a>
+  </div>
+</div>

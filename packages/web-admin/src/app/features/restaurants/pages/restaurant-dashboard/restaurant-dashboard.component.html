@@ -1,0 +1,22 @@
+<div class="fade-in">
+  <h1>{{ restaurantName() }}</h1>
+  <p class="subtitle">Panel de gestión del restaurante</p>
+
+  <div class="cards-grid">
+    <a [routerLink]="['..', 'dishes']" class="dash-card">
+      <lucide-icon name="utensils" [size]="28"></lucide-icon>
+      <h3>Platos</h3>
+      <p>Gestiona la carta del restaurante</p>
+    </a>
+    <a [routerLink]="['..', 'ingredients']" class="dash-card">
+      <lucide-icon name="package" [size]="28"></lucide-icon>
+      <h3>Ingredientes</h3>
+      <p>Controla el inventario de ingredientes</p>
+    </a>
+    <a [routerLink]="['..', 'employees']" class="dash-card">
+      <lucide-icon name="users" [size]="28"></lucide-icon>
+      <h3>Empleados</h3>
+      <p>Administra el equipo de trabajo</p>
+    </a>
+  </div>
+</div>

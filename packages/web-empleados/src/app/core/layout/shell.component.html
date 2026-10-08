@@ -1,0 +1,62 @@
+<div class="shell">
+  @if (!hasRestaurant()) {
+    <div class="no-restaurant-container">
+      <div class="no-restaurant-message">
+        <lucide-icon name="alert-circle" [size]="48"></lucide-icon>
+        <h2>Sin restaurante asignado</h2>
+        <p>Contacta a tu administrador para que te asigne un restaurante y puedas usar la aplicación.</p>
+        <button class="btn btn-secondary" (click)="logout()">
+          <lucide-icon name="log-out" [size]="16"></lucide-icon>
+          Cerrar sesión
+        </button>
+      </div>
+    </div>
+  } @else {
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <img src="/assets/images/logo.png" alt="RestTek" class="logo-img">
+        <span>RestTek</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        @if (canSeeCocina()) {
+          <a routerLink="/cocina" routerLinkActive="active" class="nav-item">
+            <lucide-icon name="flame" [size]="18"></lucide-icon>
+            <span>Cocina</span>
+          </a>
+        }
+
+        @if (canSeeBarra()) {
+          <a routerLink="/barra" routerLinkActive="active" class="nav-item">
+            <lucide-icon name="beer" [size]="18"></lucide-icon>
+            <span>Barra</span>
+          </a>
+        }
+
+        @if (canSeeSalon()) {
+          <a routerLink="/salon" routerLinkActive="active" class="nav-item">
+            <lucide-icon name="armchair" [size]="18"></lucide-icon>
+            <span>Salón</span>
+          </a>
+        }
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-info">
+          <div class="user-avatar">{{ authStore.user()?.firstName?.charAt(0) }}</div>
+          <div class="user-details">
+            <span class="user-name">{{ authStore.user()?.firstName }} {{ authStore.user()?.lastName }}</span>
+            <span class="user-role">{{ userRole() }}</span>
+          </div>
+        </div>
+        <button class="btn-logout" (click)="logout()">
+          <lucide-icon name="log-out" [size]="16"></lucide-icon>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <router-outlet />
+    </main>
+  }
+</div>

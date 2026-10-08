@@ -1,0 +1,84 @@
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img src="/assets/images/logo.png" alt="RestTek" class="logo-img">
+      <span>RestTek</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      @if (isAdmin()) {
+        <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
+          <lucide-icon name="layout-dashboard" [size]="18"></lucide-icon>
+          <span>Dashboard</span>
+        </a>
+      }
+
+      <div class="nav-section-label">Mis restaurantes</div>
+
+      @for (r of restaurantStore.restaurants(); track r.id) {
+        <div class="restaurant-group" [class.expanded]="expandedRestaurantId() === r.id">
+          <button class="nav-item restaurant-toggle" [class.active]="expandedRestaurantId() === r.id" (click)="toggleRestaurant(r.id)">
+            <lucide-icon name="utensils" [size]="16"></lucide-icon>
+            <span class="restaurant-name">{{ r.name }}</span>
+            <lucide-icon name="chevron-right" [size]="14" class="chevron"></lucide-icon>
+          </button>
+          @if (expandedRestaurantId() === r.id) {
+            <div class="sub-nav">
+              <a [routerLink]="['/restaurants', r.id, 'dashboard']" routerLinkActive="active" class="sub-nav-item">
+                <lucide-icon name="layout-dashboard" [size]="14"></lucide-icon>
+                <span>Dashboard</span>
+              </a>
+              <a [routerLink]="['/restaurants', r.id, 'dishes']" routerLinkActive="active" class="sub-nav-item">
+                <lucide-icon name="utensils" [size]="14"></lucide-icon>
+                <span>Platos</span>
+              </a>
+              <a [routerLink]="['/restaurants', r.id, 'ingredients']" routerLinkActive="active" class="sub-nav-item">
+                <lucide-icon name="package" [size]="14"></lucide-icon>
+                <span>Ingredientes</span>
+              </a>
+              <a [routerLink]="['/restaurants', r.id, 'employees']" routerLinkActive="active" class="sub-nav-item">
+                <lucide-icon name="users" [size]="14"></lucide-icon>
+                <span>Empleados</span>
+              </a>
+              <a [routerLink]="['/restaurants', r.id, 'edit']" routerLinkActive="active" class="sub-nav-item">
+                <lucide-icon name="settings" [size]="14"></lucide-icon>
+                <span>Configuración</span>
+              </a>
+            </div>
+          }
+        </div>
+      }
+
+      @if (restaurantStore.loading()) {
+        <div class="nav-loading">Cargando...</div>
+      }
+      @if (restaurantStore.restaurants().length === 0 && !restaurantStore.loading()) {
+        <div class="nav-empty">Sin restaurantes</div>
+      }
+
+      @if (isAdmin()) {
+        <a routerLink="/restaurants/new" class="nav-item nav-add">
+          <lucide-icon name="plus" [size]="16"></lucide-icon>
+          <span>Nuevo restaurante</span>
+        </a>
+      }
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar">{{ authStore.user()?.firstName?.charAt(0) }}</div>
+        <div class="user-details">
+          <span class="user-name">{{ authStore.user()?.firstName }} {{ authStore.user()?.lastName }}</span>
+          <span class="user-role">{{ authStore.user()?.role }}</span>
+        </div>
+      </div>
+      <button class="btn-logout" (click)="authService.logout()">
+        <lucide-icon name="log-out" [size]="16"></lucide-icon>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <router-outlet />
+  </main>
+</div>

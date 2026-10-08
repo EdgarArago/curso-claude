@@ -1,0 +1,41 @@
+<div class="fade-in">
+  <div class="page-header">
+    <h1>Empleados</h1>
+    <a routerLink="new" class="btn btn-primary">
+      <lucide-icon name="plus" [size]="16"></lucide-icon>
+      Nuevo empleado
+    </a>
+  </div>
+
+  @if (store.loading()) {
+    <div class="spinner"></div>
+  } @else if (store.error()) {
+    <div class="alert-error">{{ store.error() }}</div>
+  } @else if (store.employees().length === 0) {
+    <div class="empty-state card">
+      <lucide-icon name="users" [size]="40"></lucide-icon>
+      <p>No hay empleados en este restaurante</p>
+    </div>
+  } @else {
+    <div class="card table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Rol</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (e of store.employees(); track e.id) {
+            <tr>
+              <td class="employee-name">{{ e.firstName }} {{ e.lastName }}</td>
+              <td>{{ e.email }}</td>
+              <td><span [class]="getRoleBadgeClass(e.role)">{{ e.role }}</span></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
